@@ -1,0 +1,32 @@
+{% extends 'katalog/base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+    <li class="breadcrumb-item active">{{ p.nama }}</li>
+  </ol>
+</nav>
+
+<div class="row bg-white p-4 shadow-sm rounded">
+    <div class="col-md-6 text-center">
+        {% if p.gambar %}
+            <img src="{{ p.gambar.url }}" class="img-fluid rounded shadow" style="max-height: 400px;">
+        {% else %}
+            <img src="https://via.placeholder.com/500x400" class="img-fluid rounded shadow">
+        {% endif %}
+    </div>
+    <div class="col-md-6 mt-4 mt-md-0">
+        <span class="badge bg-secondary mb-2">{{ p.kategori.nama }}</span>
+        <h1 class="fw-bold">{{ p.nama }}</h1>
+        <h2 class="text-primary mb-4">Rp {{ p.harga }}</h2>
+        <hr>
+        <h5>Deskripsi:</h5>
+        <p class="text-muted" style="line-height: 1.8;">{{ p.deskripsi }}</p>
+        <p><strong>Stok Tersedia:</strong> {{ p.stok }} unit</p>
+        <hr>
+        <a href="{% url 'index' %}" class="btn btn-outline-secondary">Kembali ke Katalog</a>
+        <button class="btn btn-success">Beli Sekarang</button>
+    </div>
+</div>
+{% endblock %}
