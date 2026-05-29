@@ -2,9 +2,9 @@
 
 {% block content %}
 <div class="row mb-4">
-    <div class="col">
-        <h2 class="fw-bold">Katalog Produk</h2>
-        <p class="text-muted">Temukan berbagai barang menarik di sini.</p>
+    <div class="col text-center">
+        <h2 class="fw-bold">📚 Katalog Buku</h2>
+        <p class="text-muted">Temukan koleksi buku favorit kamu di sini.</p>
     </div>
 </div>
 
@@ -12,22 +12,29 @@
     {% for p in daftar_buku %}
     <div class="col-md-3 mb-4">
         <div class="card h-100 shadow-sm border-0">
-            src="{{ p.sampul.url }}"
-                <img src="{{ p.gambar.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+            <!-- LOGIKA GAMBAR: Jika ada sampul tampilkan, jika tidak pakai placeholder -->
+            {% if p.sampul %}
+                <img src="{{ p.sampul.url }}" class="card-img-top" style="height: 300px; object-fit: cover;">
             {% else %}
-                <img src="https://via.placeholder.com/300x200" class="card-img-top">
+                <img src="https://via.placeholder.com/300x400?text=No+Image" class="card-img-top" style="height: 300px; object-fit: cover;">
             {% endif %}
+
             <div class="card-body text-center">
                 <span class="badge bg-info-subtle text-info mb-2">{{ p.kategori.nama }}</span>
-                <h5 class="card-title h6 fw-bold">{{ p.nama }}</h5>
+                <!-- Menggunakan p.judul sesuai model Buku -->
+                <h5 class="card-title h6 fw-bold">{{ p.judul }}</h5>
+                <p class="text-muted small">Karya: {{ p.penulis }}</p>
                 <p class="text-primary fw-bold">Rp {{ p.harga }}</p>
+                
                 <!-- Tombol Lihat Detail -->
                 <a href="{% url 'detail_produk' p.id %}" class="btn btn-outline-dark btn-sm w-100">Lihat Detail</a>
             </div>
         </div>
     </div>
     {% empty %}
-    <p class="text-center">Belum ada produk.</p>
+    <div class="col-12">
+        <p class="text-center alert alert-info">Belum ada koleksi buku saat ini.</p>
+    </div>
     {% endfor %}
 </div>
 {% endblock %}

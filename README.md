@@ -1,6 +1,9 @@
 # 📚 BookArchive - Aplikasi Manajemen Katalog Buku
 
-Tugas Mata Kuliah: **Praktikum Proyek Perangkat Lunak**  
+**Identitas Mahasiswa:**
+- **Nama:** Razian Sabri
+- **NIM:** 2308107010050
+- **Mata Kuliah:** Praktikum Proyek Perangkat Lunak
 Deadline: **Minggu, 31 Mei 2026 pukul 23.59 WIB**
 
 ---
@@ -30,4 +33,4 @@ Deadline: **Minggu, 31 Mei 2026 pukul 23.59 WIB**
 1. **Clone Repository**
    ```bash
    git clone <link-repo-github-kamu>
-   cd katalog_buku
+   cd UAS_PPL_KATALOG
