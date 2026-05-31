@@ -28,6 +28,25 @@
     .mt-auto-custom {
         margin-top: auto;
     }
+
+    /* CSS Khusus untuk Warna Badge Kategori */
+    .badge-teknologi { background-color: #0d6efd; color: white; } /* Biru */
+    .badge-fiksi { background-color: #198754; color: white; } /* Hijau */
+    .badge-pengembangan-diri { background-color: #6f42c1; color: white; } /* Ungu */
+    .badge-sains { background-color: #0dcaf0; color: #000; } /* Biru Muda/Cyan */
+    .badge-sejarah { background-color: #ffc107; color: #000; } /* Kuning */
+    
+    /* Warna default jika kategori tidak terdaftar di atas */
+    .badge-default { background-color: #6c757d; color: white; }
+
+    /* Ukuran badge agar lebih bagus */
+    .badge-cat {
+        padding: 0.5em 1em;
+        border-radius: 50px;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-size: 0.7rem;
+    }
 </style>
 
 <div class="row mb-4">
@@ -61,9 +80,12 @@
 
             <div class="card-body text-center d-flex flex-column">
                 <div class="mb-2">
-                    <span class="badge bg-info-subtle text-info">{{ p.kategori.nama }}</span>
+                    <!-- Perhatikan class-nya sekarang dinamis menggunakan |slugify -->
+                    <span class="badge badge-cat badge-{{ p.kategori.nama|slugify }}">
+                        {{ p.kategori.nama }}
+                    </span>
                 </div>
-                
+    
                 <h5 class="card-title h6 fw-bold">{{ p.judul }}</h5>
                 <p class="text-muted small">Karya: {{ p.penulis }}</p>
                 
