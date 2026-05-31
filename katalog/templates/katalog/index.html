@@ -130,7 +130,15 @@
         <p class="alert alert-info">Belum ada koleksi buku.</p>
     </div>
     {% endfor %}
-</div>
+
+    <!-- Pesan Jika Buku Tidak Ditemukan -->
+    <div id="no-results" class="col-12 text-center py-5" style="display: none;">
+        <div class="display-1 text-muted mb-3">🔍</div>
+            <h4 class="text-muted fw-bold">Maaf, buku tidak ditemukan</h4>
+            <p class="text-secondary">Coba gunakan kata kunci lain atau pilih kategori yang berbeda.</p>
+            <button onclick="resetSearch()" class="btn btn-outline-primary btn-sm mt-3">Tampilkan Semua Buku</button>
+        </div>
+    </div>
 
 <!-- LOGIKA JAVASCRIPT -->
 <script>
@@ -138,22 +146,31 @@
     const filterButtons = document.querySelectorAll('.filter-btn');
     const categoryLabel = document.getElementById('categoryLabel');
     const bookItems = document.querySelectorAll('.book-item');
+    const noResults = document.getElementById('no-results');
 
-    // 1. Logika Filter Kategori
+    // FUNGSI UTAMA: Cek apakah ada buku yang tampil
+    function checkVisibility() {
+        let visibleCount = 0;
+        bookItems.forEach(item => {
+            if (item.style.display !== 'none') {
+                visibleCount++;
+            }
+        });
+
+        if (visibleCount === 0) {
+            noResults.style.display = 'block';
+        } else {
+            noResults.style.display = 'none';
+        }
+    }
+
+    // 1. Logika Filter Kategori (Dropdown)
     filterButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
-            
-            // --- BAGIAN PERBAIKAN: Memindahkan Warna Biru (Active) ---
-            filterButtons.forEach(btn => btn.classList.remove('active')); // Hapus biru dari semua
-            this.classList.add('active'); // Tambah biru ke yang diklik saja
-            
-            // Update Label Teks di Tombol Utama
             categoryLabel.innerText = this.innerText;
-            
-            // Reset Kolom Pencarian
             searchInput.value = '';
-
+            
             const filterValue = this.getAttribute('data-filter');
             bookItems.forEach(item => {
                 if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
@@ -162,19 +179,14 @@
                     item.style.display = 'none';
                 }
             });
+            checkVisibility(); // Jalankan pengecekan
         });
     });
 
     // 2. Logika Pencarian Real-time
     searchInput.addEventListener('input', function() {
         const query = this.value.toLowerCase();
-        
-        if(query !== "") {
-            // Jika mengetik, kembalikan label ke "Semua Kategori" dan pindahkan biru ke "Semua"
-            categoryLabel.innerText = "Semua Kategori";
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            document.querySelector('[data-filter="all"]').classList.add('active');
-        }
+        if(query !== "") { categoryLabel.innerText = "Semua Kategori"; }
 
         bookItems.forEach(item => {
             const title = item.querySelector('.card-title').innerText.toLowerCase();
@@ -186,6 +198,15 @@
                 item.style.display = 'none';
             }
         });
+        checkVisibility(); // Jalankan pengecekan
     });
+
+    // 3. Fungsi Reset (Jika tombol diklik)
+    function resetSearch() {
+        searchInput.value = '';
+        categoryLabel.innerText = "Semua Kategori";
+        bookItems.forEach(item => item.style.display = 'block');
+        noResults.style.display = 'none';
+    }
 </script>
 {% endblock %}
