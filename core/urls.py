@@ -24,6 +24,6 @@ urlpatterns = [
     path('', include('katalog.urls')), # Rute untuk halaman publik
 ]
 
-# Agar gambar yang diupload bisa muncul di browser
+# Untuk mengupload gambar di browser
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

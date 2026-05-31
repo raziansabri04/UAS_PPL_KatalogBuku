@@ -11,7 +11,7 @@ def index(request):
     }
     return render(request, 'katalog/index.html', context)
 
-# Fungsi untuk Halaman Detail Buku (INI YANG TADI HILANG/ERROR)
+# Fungsi untuk Halaman Detail Buku 
 def detail_produk(request, id):
     # Mengambil buku berdasarkan ID, jika tidak ada kirim error 404
     buku = get_object_or_404(Buku, id=id)
