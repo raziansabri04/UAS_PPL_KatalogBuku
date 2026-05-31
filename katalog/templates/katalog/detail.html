@@ -3,30 +3,49 @@
 {% block content %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
-    <li class="breadcrumb-item active">{{ p.nama }}</li>
+    <li class="breadcrumb-item"><a href="{% url 'index' %}" class="text-decoration-none">Home</a></li>
+    <!-- Menggunakan p.judul -->
+    <li class="breadcrumb-item active" aria-current="page">{{ p.judul }}</li>
   </ol>
 </nav>
 
-<div class="row bg-white p-4 shadow-sm rounded">
-    <div class="col-md-6 text-center">
-        {% if p.gambar %}
-            <img src="{{ p.gambar.url }}" class="img-fluid rounded shadow" style="max-height: 400px;">
+<div class="row bg-white p-4 shadow-sm rounded border">
+    <div class="col-md-5 text-center mb-4 mb-md-0">
+        <!-- LOGIKA SAMPUL: Menggunakan p.sampul -->
+        {% if p.sampul %}
+            <img src="{{ p.sampul.url }}" class="img-fluid rounded shadow" style="max-height: 500px; border: 1px solid #ddd;">
         {% else %}
-            <img src="https://via.placeholder.com/500x400" class="img-fluid rounded shadow">
+            <img src="https://via.placeholder.com/400x600?text=No+Cover" class="img-fluid rounded shadow">
         {% endif %}
     </div>
-    <div class="col-md-6 mt-4 mt-md-0">
+    
+    <div class="col-md-7 ps-md-5">
         <span class="badge bg-secondary mb-2">{{ p.kategori.nama }}</span>
-        <h1 class="fw-bold">{{ p.nama }}</h1>
-        <h2 class="text-primary mb-4">Rp {{ p.harga }}</h2>
+        <!-- Menggunakan p.judul -->
+        <h1 class="fw-bold display-5">{{ p.judul }}</h1>
+        <!-- Menggunakan p.penulis -->
+        <p class="text-muted fs-5">Penulis: <strong>{{ p.penulis }}</strong></p>
+        
+        <h2 class="text-primary fw-bold my-4">Rp {{ p.harga }}</h2>
+        
         <hr>
-        <h5>Deskripsi:</h5>
-        <p class="text-muted" style="line-height: 1.8;">{{ p.deskripsi }}</p>
-        <p><strong>Stok Tersedia:</strong> {{ p.stok }} unit</p>
-        <hr>
-        <a href="{% url 'index' %}" class="btn btn-outline-secondary">Kembali ke Katalog</a>
-        <button class="btn btn-success">Beli Sekarang</button>
+        
+        <div class="my-4">
+            <h5 class="fw-bold">Sinopsis:</h5>
+            <!-- Menggunakan p.sinopsis -->
+            <p class="text-muted" style="line-height: 1.8; text-align: justify;">
+                {{ p.sinopsis|linebreaks }}
+            </p>
+        </div>
+
+        <div class="alert alert-light border">
+            <strong>Stok Tersedia:</strong> {{ p.stok }} unit
+        </div>
+        
+        <div class="mt-5">
+            <a href="{% url 'index' %}" class="btn btn-outline-secondary px-4 py-2 me-2">Kembali ke Katalog</a>
+            <button class="btn btn-success px-4 py-2">Beli Sekarang</button>
+        </div>
     </div>
 </div>
 {% endblock %}
