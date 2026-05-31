@@ -1,5 +1,4 @@
 {% extends 'katalog/base.html' %}
-{% load static %}
 
 {% block content %}
 <nav aria-label="breadcrumb">
@@ -38,7 +37,7 @@
             <strong>Stok Tersedia:</strong> {{ p.stok }} unit
         </div>
         
-        <!-- BAGIAN TOMBOL -->
+        <!-- BAGIAN TOMBOL (DIPERBAIKI) -->
         <div class="mt-5 d-flex gap-3">
             <a href="{% url 'index' %}" class="btn btn-outline-secondary px-4 py-2">
                 Kembali ke Katalog
@@ -50,7 +49,7 @@
     </div>
 </div>
 
-<!-- MODAL PILIHAN TOKO (MENGGUNAKAN LOGO SENDIRI) -->
+<!-- MODAL PILIHAN TOKO (DENGAN LOGO STABIL) -->
 <div class="modal fade" id="beliModal" tabindex="-1" aria-labelledby="beliModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
@@ -64,7 +63,8 @@
                 <div class="list-group gap-2">
                     <!-- Gramedia -->
                     <a href="https://www.gramedia.com/search?q={{ p.judul }}" target="_blank" class="list-group-item list-group-item-action border rounded-3 d-flex align-items-center p-3">
-                        <img src="{% static 'img/logo-gramedia.png' %}" style="width: 40px; height: 40px; object-fit: contain;" class="me-3 rounded">
+                        <!-- Menggunakan Logo dari Clearbit (Lebih Stabil) -->
+                        <img src="https://logo.clearbit.com/gramedia.com" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2232/2232688.png'" style="width: 40px; height: 40px; object-fit: contain;" class="me-3 shadow-sm rounded">
                         <div>
                             <h6 class="mb-0 fw-bold">Gramedia</h6>
                             <small class="text-muted">Toko buku terbesar di Indonesia</small>
@@ -74,7 +74,7 @@
 
                     <!-- Amazon -->
                     <a href="https://www.amazon.com/s?k={{ p.judul }}" target="_blank" class="list-group-item list-group-item-action border rounded-3 d-flex align-items-center p-3">
-                        <img src="{% static 'img/logo-amazon.jpg' %}" style="width: 40px; height: 40px; object-fit: contain;" class="me-3 rounded">
+                        <img src="https://logo.clearbit.com/amazon.com" onerror="this.src='https://cdn-icons-png.flaticon.com/512/5968/5968202.png'" style="width: 40px; height: 40px; object-fit: contain;" class="me-3 shadow-sm rounded">
                         <div>
                             <h6 class="mb-0 fw-bold">Amazon</h6>
                             <small class="text-muted">Toko buku online global</small>
@@ -84,7 +84,7 @@
 
                     <!-- Google Books -->
                     <a href="https://books.google.com/books?q={{ p.judul }}" target="_blank" class="list-group-item list-group-item-action border rounded-3 d-flex align-items-center p-3">
-                        <img src="{% static 'img/logo-google.png' %}" style="width: 40px; height: 40px; object-fit: contain;" class="me-3 rounded">
+                        <img src="https://logo.clearbit.com/google.com" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2991/2991148.png'" style="width: 40px; height: 40px; object-fit: contain;" class="me-3 shadow-sm rounded">
                         <div>
                             <h6 class="mb-0 fw-bold">Google Books</h6>
                             <small class="text-muted">Lihat pratinjau atau beli versi digital</small>
