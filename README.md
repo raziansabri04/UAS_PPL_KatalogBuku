@@ -4,7 +4,6 @@
 - **Nama:** Razian Sabri
 - **NIM:** 2308107010050
 - **Mata Kuliah:** Praktikum Proyek Perangkat Lunak
-Deadline: **Minggu, 31 Mei 2026 pukul 23.59 WIB**
 
 ---
 
