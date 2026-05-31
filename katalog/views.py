@@ -16,3 +16,6 @@ def detail_produk(request, id):
     # Mengambil buku berdasarkan ID, jika tidak ada kirim error 404
     buku = get_object_or_404(Buku, id=id)
     return render(request, 'katalog/detail.html', {'p': buku})
+
+def tentang(request):
+    return render(request, 'katalog/tentang.html')

@@ -1,0 +1,56 @@
+{% extends 'katalog/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Judul Utama -->
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="fw-bold mb-4">Tentang BookArchive</h1>
+            <p class="lead text-muted mb-5">
+                BookArchive adalah platform katalog digital modern yang dirancang untuk memudahkan manajemen dan pencarian koleksi buku secara efisien.
+            </p>
+        </div>
+    </div>
+
+    <!-- Tiga Kotak Fitur (Satu Ikon Saja) -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4 text-center">
+            <div class="p-4 bg-white shadow-sm rounded-4 border h-100">
+                <div class="display-4 mb-3">🔍</div>
+                <h5 class="fw-bold">Pencarian Cepat</h5>
+                <p class="text-muted small">Cari buku favorit Anda berdasarkan judul atau penulis secara real-time.</p>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="p-4 bg-white shadow-sm rounded-4 border h-100">
+                <div class="display-4 mb-3">🏷️</div>
+                <h5 class="fw-bold">Kategori Terorganisir</h5>
+                <p class="text-muted small">Buku dikelompokkan berdasarkan kategori untuk navigasi yang lebih baik.</p>
+            </div>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="p-4 bg-white shadow-sm rounded-4 border h-100">
+                <div class="display-4 mb-3">💻</div>
+                <h5 class="fw-bold">Manajemen Admin</h5>
+                <p class="text-muted small">Dashboard khusus bagi admin untuk mengelola data buku dengan sistem CRUD.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Identitas Pengembang -->
+    <div class="row mt-5 justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-body p-5 text-center">
+                    <h3 class="fw-bold mb-3 text-dark">Pengembang Project</h3>
+                    <p class="text-muted mb-4">Project ini dikembangkan sebagai syarat memenuhi tugas mata kuliah Praktikum Proyek Perangkat Lunak.</p>
+                    <hr>
+                    <h5 class="fw-bold mt-4 text-dark">Razian Sabri</h5>
+                    <p class="text-dark mb-1">2308107010050</p>
+                    <p class="text-dark mb-0">Informatika</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
