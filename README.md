@@ -50,7 +50,6 @@
 
     Persiapan Database & Import Data
     python manage.py migrate
-    # Import data contoh (20 buku & 5 kategori)
     python manage.py loaddata data_buku.json
 
     Menjalankan Aplikasi
