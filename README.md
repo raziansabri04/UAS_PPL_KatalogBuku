@@ -39,8 +39,6 @@
    cd UAS_PPL_KATALOG
 
     Setup Virtual Environment
-    code Bash
-
     python -m venv venv
     # Aktivasi (Windows):
     venv\Scripts\activate
@@ -48,20 +46,14 @@
     source venv/bin/activate
 
     Install Dependensi
-    code Bash
-
     pip install -r requirements.txt
 
     Persiapan Database & Import Data
-    code Bash
-
     python manage.py migrate
     # Import data contoh (20 buku & 5 kategori)
     python manage.py loaddata data_buku.json
 
     Menjalankan Aplikasi
-    code Bash
-
     python manage.py runserver
 
     Akses aplikasi di: http://127.0.0.1:8000/
