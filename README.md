@@ -69,4 +69,4 @@
 
     Link Repository: https://github.com/raziansabri04/UAS_PPL_KatalogBuku
 
-    Link Video Presentasi: [Youtube/Google Drive Link]
+    Link Video Presentasi: https://drive.google.com/file/d/1LCwDio7DtO7fiuRh_DOY-jSyO8i9pGzV/view?usp=sharing
