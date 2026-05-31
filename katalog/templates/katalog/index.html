@@ -2,51 +2,66 @@
 
 {% block content %}
 <style>
-    /* Membuat semua tombol filter memiliki lebar yang sama */
-    .filter-btn {
-        min-width: 160px;
-        margin: 5px;
-        transition: all 0.3s ease;
+    /* 1. CSS UNTUK FILTER & SEARCH PILL */
+    .search-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 50px;
     }
-
-    .filter-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    .category-trigger {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        color: #333;
+        transition: 0.3s;
+        text-decoration: none;
     }
+    .category-trigger:hover { opacity: 0.7; }
+    .category-trigger span { font-weight: 700; font-size: 1.1rem; margin-left: 10px; }
 
-    /* Memastikan area judul memiliki tinggi yang sama */
+    .search-pill-container {
+        flex-grow: 1;
+        max-width: 600px;
+        display: flex;
+        align-items: center;
+        background: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 50px;
+        padding: 5px 20px;
+        transition: 0.3s;
+    }
+    .search-pill-container:focus-within { border-color: #0d6efd; box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1); }
+    .search-pill-container input { border: none; outline: none; width: 100%; padding: 10px 15px; font-size: 1rem; background: transparent; }
+
+    /* 2. CSS UNTUK KARTU BUKU (SIMETRIS) */
     .card-title {
         min-height: 3.5rem; 
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
-        margin-bottom: 0.5rem;
+    }
+    .mt-auto-custom { margin-top: auto; }
+
+    /* 1. Warna Dasar (Default) */
+    .badge-cat { 
+        padding: 0.5em 1em; 
+        border-radius: 50px; 
+        font-weight: 500; 
+        text-transform: uppercase; 
+        font-size: 0.7rem; 
+        background-color: #6c757d; /* Warna abu-abu standar */
+        color: white;
     }
 
-    /* Memaksa tombol ke bawah kartu */
-    .mt-auto-custom {
-        margin-top: auto;
-    }
-
-    /* CSS Khusus untuk Warna Badge Kategori */
-    .badge-teknologi { background-color: #0d6efd; color: white; } /* Biru */
-    .badge-fiksi { background-color: #198754; color: white; } /* Hijau */
-    .badge-pengembangan-diri { background-color: #6f42c1; color: white; } /* Ungu */
-    .badge-sains { background-color: #0dcaf0; color: #000; } /* Biru Muda/Cyan */
-    .badge-sejarah { background-color: #ffc107; color: #000; } /* Kuning */
-    
-    /* Warna default jika kategori tidak terdaftar di atas */
-    .badge-default { background-color: #6c757d; color: white; }
-
-    /* Ukuran badge agar lebih bagus */
-    .badge-cat {
-        padding: 0.5em 1em;
-        border-radius: 50px;
-        font-weight: 500;
-        text-transform: uppercase;
-        font-size: 0.7rem;
-    }
+    /* 2. Warna Spesifik (Akan menimpa warna dasar jika cocok) */
+    .badge-teknologi { background-color: #0d6efd !important; color: white !important; }
+    .badge-fiksi { background-color: #198754 !important; color: white !important; }
+    .badge-pengembangan-diri { background-color: #6f42c1 !important; color: white !important; }
+    .badge-sains { background-color: #0dcaf0 !important; color: #000 !important; }
+    .badge-sejarah { background-color: #ffc107 !important; color: #000 !important; }
 </style>
 
 <div class="row mb-4">
@@ -56,18 +71,32 @@
     </div>
 </div>
 
-<!-- TOMBOL FILTER -->
-<div class="row mb-5">
-    <div class="col-12 text-center">
-        <button class="btn btn-primary text-white btn-sm m-1 filter-btn" data-filter="all">Semua</button>
-        {% for kat in daftar_kategori %}
-            <button class="btn btn-outline-primary btn-sm m-1 filter-btn" data-filter="{{ kat.nama|slugify }}">
-                {{ kat.nama }}
-            </button>
-        {% endfor %}
+<!-- TAMPILAN PENCARIAN MODERN -->
+<div class="search-wrapper px-3">
+    <!-- Dropdown Kategori -->
+    <div class="dropdown">
+        <a class="category-trigger" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-chevron-down fw-bold"></i>
+            <span id="categoryLabel">Semua Kategori</span>
+        </a>
+
+        <ul class="dropdown-menu shadow border-0" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item filter-btn active" href="#" data-filter="all">Semua Kategori</a></li>
+            <!-- Garis divider dihapus di sini agar lebih bersih -->
+                {% for kat in daftar_kategori %}
+            <li><a class="dropdown-item filter-btn" href="#" data-filter="{{ kat.nama|slugify }}">{{ kat.nama }}</a></li>
+                {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Bar Pencarian Pill -->
+    <div class="search-pill-container shadow-sm">
+        <i class="bi bi-search text-muted"></i>
+        <input type="text" id="searchInput" placeholder="Cari Produk, Judul Buku, atau Penulis">
     </div>
 </div>
 
+<!-- CONTAINER DAFTAR BUKU -->
 <div class="row" id="book-container">
     {% for p in daftar_buku %}
     <div class="col-md-3 mb-4 book-item" data-category="{{ p.kategori.nama|slugify }}">
@@ -80,12 +109,12 @@
 
             <div class="card-body text-center d-flex flex-column">
                 <div class="mb-2">
-                    <!-- Perhatikan class-nya sekarang dinamis menggunakan |slugify -->
+                    <!-- Hapus 'badge-default' dari daftar class agar tidak bentrok -->
                     <span class="badge badge-cat badge-{{ p.kategori.nama|slugify }}">
                         {{ p.kategori.nama }}
                     </span>
                 </div>
-    
+                
                 <h5 class="card-title h6 fw-bold">{{ p.judul }}</h5>
                 <p class="text-muted small">Karya: {{ p.penulis }}</p>
                 
@@ -93,9 +122,9 @@
                     <p class="text-primary fw-bold mb-2">Rp {{ p.harga }}</p>
                     <a href="{% url 'detail_produk' p.id %}" class="btn btn-outline-dark btn-sm w-100">Lihat Detail</a>
                 </div>
-            </div> <!-- Tutup card-body -->
-        </div> <!-- Tutup card -->
-    </div> <!-- Tutup col-md-3 -->
+            </div>
+        </div>
+    </div>
     {% empty %}
     <div class="col-12 text-center">
         <p class="alert alert-info">Belum ada koleksi buku.</p>
@@ -103,28 +132,59 @@
     {% endfor %}
 </div>
 
-<!-- JAVASCRIPT UNTUK FILTER -->
+<!-- LOGIKA JAVASCRIPT -->
 <script>
-    document.querySelectorAll('.filter-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('btn-primary', 'text-white');
-                btn.classList.add('btn-outline-primary');
-            });
+    const searchInput = document.getElementById('searchInput');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const categoryLabel = document.getElementById('categoryLabel');
+    const bookItems = document.querySelectorAll('.book-item');
 
-            this.classList.remove('btn-outline-primary');
-            this.classList.add('btn-primary', 'text-white');
+    // 1. Logika Filter Kategori
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // --- BAGIAN PERBAIKAN: Memindahkan Warna Biru (Active) ---
+            filterButtons.forEach(btn => btn.classList.remove('active')); // Hapus biru dari semua
+            this.classList.add('active'); // Tambah biru ke yang diklik saja
+            
+            // Update Label Teks di Tombol Utama
+            categoryLabel.innerText = this.innerText;
+            
+            // Reset Kolom Pencarian
+            searchInput.value = '';
 
             const filterValue = this.getAttribute('data-filter');
-            const items = document.querySelectorAll('.book-item');
-
-            items.forEach(item => {
+            bookItems.forEach(item => {
                 if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
                     item.style.display = 'block';
                 } else {
                     item.style.display = 'none';
                 }
             });
+        });
+    });
+
+    // 2. Logika Pencarian Real-time
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        
+        if(query !== "") {
+            // Jika mengetik, kembalikan label ke "Semua Kategori" dan pindahkan biru ke "Semua"
+            categoryLabel.innerText = "Semua Kategori";
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            document.querySelector('[data-filter="all"]').classList.add('active');
+        }
+
+        bookItems.forEach(item => {
+            const title = item.querySelector('.card-title').innerText.toLowerCase();
+            const author = item.querySelector('.text-muted').innerText.toLowerCase();
+            
+            if (title.includes(query) || author.includes(query)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
         });
     });
 </script>
