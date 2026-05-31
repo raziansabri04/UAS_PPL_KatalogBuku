@@ -1,6 +1,35 @@
 {% extends 'katalog/base.html' %}
 
 {% block content %}
+<style>
+    /* Membuat semua tombol filter memiliki lebar yang sama */
+    .filter-btn {
+        min-width: 160px;
+        margin: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Memastikan area judul memiliki tinggi yang sama */
+    .card-title {
+        min-height: 3.5rem; 
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Memaksa tombol ke bawah kartu */
+    .mt-auto-custom {
+        margin-top: auto;
+    }
+</style>
+
 <div class="row mb-4">
     <div class="col text-center">
         <h2 class="fw-bold">📚 Katalog Buku</h2>
@@ -11,9 +40,7 @@
 <!-- TOMBOL FILTER -->
 <div class="row mb-5">
     <div class="col-12 text-center">
-        <!-- Tombol Semua (Aktif di awal dengan btn-primary) -->
         <button class="btn btn-primary text-white btn-sm m-1 filter-btn" data-filter="all">Semua</button>
-        
         {% for kat in daftar_kategori %}
             <button class="btn btn-outline-primary btn-sm m-1 filter-btn" data-filter="{{ kat.nama|slugify }}">
                 {{ kat.nama }}
@@ -24,7 +51,6 @@
 
 <div class="row" id="book-container">
     {% for p in daftar_buku %}
-    <!-- Tambahkan class 'book-item' dan slug kategori di sini -->
     <div class="col-md-3 mb-4 book-item" data-category="{{ p.kategori.nama|slugify }}">
         <div class="card h-100 shadow-sm border-0">
             {% if p.sampul %}
@@ -33,15 +59,21 @@
                 <img src="https://via.placeholder.com/300x400?text=No+Image" class="card-img-top" style="height: 300px; object-fit: cover;">
             {% endif %}
 
-            <div class="card-body text-center">
-                <span class="badge bg-info-subtle text-info mb-2">{{ p.kategori.nama }}</span>
+            <div class="card-body text-center d-flex flex-column">
+                <div class="mb-2">
+                    <span class="badge bg-info-subtle text-info">{{ p.kategori.nama }}</span>
+                </div>
+                
                 <h5 class="card-title h6 fw-bold">{{ p.judul }}</h5>
                 <p class="text-muted small">Karya: {{ p.penulis }}</p>
-                <p class="text-primary fw-bold">Rp {{ p.harga }}</p>
-                <a href="{% url 'detail_produk' p.id %}" class="btn btn-outline-dark btn-sm w-100">Lihat Detail</a>
-            </div>
-        </div>
-    </div>
+                
+                <div class="mt-auto-custom">
+                    <p class="text-primary fw-bold mb-2">Rp {{ p.harga }}</p>
+                    <a href="{% url 'detail_produk' p.id %}" class="btn btn-outline-dark btn-sm w-100">Lihat Detail</a>
+                </div>
+            </div> <!-- Tutup card-body -->
+        </div> <!-- Tutup card -->
+    </div> <!-- Tutup col-md-3 -->
     {% empty %}
     <div class="col-12 text-center">
         <p class="alert alert-info">Belum ada koleksi buku.</p>
@@ -53,17 +85,14 @@
 <script>
     document.querySelectorAll('.filter-btn').forEach(button => {
         button.addEventListener('click', function() {
-            // 1. RESET: Semua tombol dikembalikan ke outline (putih)
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('btn-primary', 'text-white');
                 btn.classList.add('btn-outline-primary');
             });
 
-            // 2. AKTIFKAN: Tombol yang diklik diubah menjadi biru (solid)
             this.classList.remove('btn-outline-primary');
             this.classList.add('btn-primary', 'text-white');
 
-            // 3. LOGIKA FILTERING
             const filterValue = this.getAttribute('data-filter');
             const items = document.querySelectorAll('.book-item');
 
@@ -77,5 +106,4 @@
         });
     });
 </script>
-
 {% endblock %}
